@@ -1,0 +1,11 @@
+gradio
+streamlit
+python-docx
+langchain
+langchain-community
+faiss-cpu
+beautifulsoup4
+requests
+pypdf
+tiktoken
+ollama
