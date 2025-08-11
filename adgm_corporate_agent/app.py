@@ -1,5 +1,6 @@
 import gradio as gr
 import os
+import shutil
 from document_processor import process_document, identify_document_type
 from rag_processor import analyze_with_rag
 
@@ -16,14 +17,11 @@ def process_files(files):
 
     # Save uploaded files and identify their types
     uploaded_files_info = []
-    for file in files:
-        file_path = os.path.join(uploads_dir, os.path.basename(file.name))
-        # We need to read the file into memory to pass to the function,
-        # then write it to disk.
-        file_bytes = file.read()
-        with open(file_path, "wb") as f:
-            f.write(file_bytes)
-        
+    for temp_file_path in files:
+        file_name = os.path.basename(temp_file_path)
+        file_path = os.path.join(uploads_dir, file_name)
+        shutil.copy(temp_file_path, file_path)
+
         doc_type = identify_document_type(file_path)
         uploaded_files_info.append({"path": file_path, "type": doc_type})
 
